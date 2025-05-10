@@ -1,0 +1,15 @@
+.main-layout {
+  display: flex;
+  height: 100vh;
+  background-color: var(--bg-color);
+}
+
+/* Responsive stacking */
+@media (max-width: 768px) {
+  .main-layout {
+    flex-direction: column;
+  }
+  .sidebar, .central-workspace {
+    width: 100%;
+  }
+}

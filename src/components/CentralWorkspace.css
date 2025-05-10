@@ -1,0 +1,30 @@
+.central-workspace {
+  width: 46%;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.visualizer-placeholder,
+.spectrum-placeholder,
+.midi-mapping-placeholder,
+.global-controls-placeholder,
+.env-placeholder {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0;
+  border-radius: 6px;
+}
+
+.open-matrix-btn {
+  background-color: var(--accent-color);
+  border: none;
+  color: var(--bg-color);
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}

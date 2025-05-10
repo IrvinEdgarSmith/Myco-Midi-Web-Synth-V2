@@ -1,0 +1,44 @@
+/* PhaseContainer styling */
+.phase-container {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.phase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.phase-title {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.advanced-toggle {
+  background-color: var(--accent-color);
+  border: none;
+  color: var(--bg-color);
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.phase-body {
+  margin-top: 10px;
+}
+
+.advanced-section {
+  margin-top: 12px;
+  padding: 10px;
+  background-color: var(--tertiary-color);
+  border-radius: 4px;
+}
+
+.placeholder {
+  opacity: 0.7;
+  font-style: italic;
+}

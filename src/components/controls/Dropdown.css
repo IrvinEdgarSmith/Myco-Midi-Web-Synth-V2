@@ -1,0 +1,24 @@
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+}
+
+.dropdown-label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.dropdown {
+  padding: 4px 8px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+}
+
+.dropdown option {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
