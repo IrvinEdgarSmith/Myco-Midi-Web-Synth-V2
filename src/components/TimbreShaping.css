@@ -1,0 +1,246 @@
+/* Timbre Shaping layout */
+.timbre-shaping-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Overall gap between sections */
+}
+
+/* Filter type selector styling */
+.filter-type-selector {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.filter-type-btn {
+  flex: 1 1 auto; /* Allow buttons to grow and shrink but base on content */
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  background: var(--secondary-gradient);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.filter-type-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.filter-type-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.filter-type-btn.active {
+  background: var(--primary-gradient);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Basic filter controls */
+.basic-filter-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.control-container {
+  flex: 1 1 120px;
+  min-width: 90px;
+  max-width: 150px;
+}
+
+/* Advanced Section Toggle Button */
+.advanced-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 15px; /* Space above the toggle */
+  background: linear-gradient(145deg, rgba(0, 96, 100, 0.2), rgba(0, 96, 100, 0.4));
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.advanced-section-toggle:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.advanced-section-toggle:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Advanced filter settings specific styling */
+.advanced-filter-settings {
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px dashed var(--accent-color);
+  border-radius: var(--border-radius);
+  background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05));
+  box-shadow: var(--inner-shadow);
+  position: relative;
+  max-height: 600px;
+  overflow-y: visible;
+}
+
+.advanced-filter-settings::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, var(--accent-color), transparent);
+  border-radius: calc(var(--border-radius) + 2px);
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.advanced-filter-settings h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: var(--accent-color);
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.advanced-filter-settings h4::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: -6px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+}
+
+.advanced-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+/* Key tracking switch styling */
+.key-tracking-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px; /* Add a bit of space at the top to align better with knobs */
+}
+
+.key-tracking-label {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--text-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Control label styling */
+.control-label {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+/* Filter selector section */
+.filter-selector {
+  margin-bottom: 15px;
+}
+
+/* Filter response visualization styling */
+.filter-visualization {
+  margin: 10px 0 15px 0;
+  padding: 5px;
+  border-radius: var(--border-radius);
+  background: rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.filter-visualization::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, transparent, var(--accent-color), transparent);
+  border-radius: calc(var(--border-radius) + 1px);
+  z-index: -1;
+  opacity: 0.05;
+}
+
+/* Filter preview button */
+.filter-preview-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.filter-preview-button:hover {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.filter-preview-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.filter-preview-button.playing {
+  background: var(--primary-gradient);
+  border-color: var(--accent-color);
+  box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Placeholder styling */
+.placeholder {
+  font-style: italic;
+  color: var(--text-color-dimmed);
+  text-align: center;
+}

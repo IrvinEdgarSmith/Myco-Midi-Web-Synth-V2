@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PhaseContainer from './PhaseContainer';
 import Toggle from './controls/Toggle';
 import SoundGeneration from './SoundGeneration';
+import TimbreShaping from './TimbreShaping';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -40,11 +41,13 @@ const Sidebar: React.FC<SidebarProps> = ({ variant }) => {
           <Toggle label="Master On/Off" value={masterOn} onChange={setMasterOn} />
         </div>
       )}
-      
-      <div className="sidebar-content">
+        <div className="sidebar-content">
         {containers.map((title) => {
           if (variant === 'subtractive' && title === 'Sound Generation') {
             return <SoundGeneration key={title} />;
+          }
+          if (variant === 'subtractive' && title === 'Timbre Shaping') {
+            return <TimbreShaping key={title} />;
           }
           return <PhaseContainer key={title} title={title} />;
         })}

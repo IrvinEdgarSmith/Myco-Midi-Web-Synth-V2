@@ -1,0 +1,54 @@
+/* Filter Response Component Styling */
+.filter-response {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+  position: relative;
+}
+
+.filter-response-canvas {
+  border-radius: var(--border-radius);
+  box-shadow: var(--inner-shadow);
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Add a subtle glow effect when the resonance is high */
+.filter-response.high-resonance .filter-response-canvas {
+  box-shadow: var(--inner-shadow), 0 0 8px var(--accent-color);
+}
+
+/* Tooltip styling for info hover */
+.filter-response-tooltip {
+  position: absolute;
+  top: -30px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.filter-response:hover .filter-response-tooltip {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filter-response {
+    margin: 5px 0;
+  }
+  
+  .filter-response-canvas {
+    height: 60px; /* Smaller height on mobile */
+  }
+}
