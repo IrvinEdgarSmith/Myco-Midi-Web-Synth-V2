@@ -3,11 +3,16 @@
   align-items: center;
   cursor: pointer;
   margin: 8px;
+  position: relative;
 }
 
 .toggle-label {
-  margin-right: 8px;
+  margin-right: 10px;
   color: var(--text-color);
+  font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
 
 .toggle-input {
@@ -18,11 +23,13 @@
 
 .toggle-slider {
   position: relative;
-  width: 40px;
-  height: 20px;
-  background-color: var(--secondary-color);
+  width: 46px;
+  height: 22px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(30, 30, 30, 0.3));
   border-radius: 12px;
-  transition: background-color 0.2s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .toggle-slider::before {
@@ -30,17 +37,46 @@
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 16px;
-  height: 16px;
-  background-color: var(--bg-color);
+  width: 18px;
+  height: 18px;
+  background: var(--secondary-gradient);
   border-radius: 50%;
-  transition: transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .toggle-input:checked + .toggle-slider {
-  background-color: var(--accent-color);
+  background: linear-gradient(to right, rgba(174, 234, 0, 0.2), rgba(174, 234, 0, 0.4));
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 5px rgba(174, 234, 0, 0.3);
 }
 
 .toggle-input:checked + .toggle-slider::before {
-  transform: translateX(20px);
+  transform: translateX(24px);
+  background: linear-gradient(145deg, rgb(174, 234, 0), rgb(154, 214, 0));
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-input:focus + .toggle-slider {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(174, 234, 0, 0.2);
+}
+
+/* Hover effects */
+.toggle-container:hover .toggle-slider::before {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05) translateY(-1px) translateX(var(--translate-x, 0));
+}
+
+.toggle-container:hover .toggle-input:checked + .toggle-slider::before {
+  transform: scale(1.05) translateY(-1px) translateX(24px);
+}
+
+/* Active/pressed state */
+.toggle-container:active .toggle-slider::before {
+  transform: scale(0.95) translateX(var(--translate-x, 0));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-container:active .toggle-input:checked + .toggle-slider::before {
+  transform: scale(0.95) translateX(24px);
 }

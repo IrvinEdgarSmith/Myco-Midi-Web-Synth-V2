@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PhaseContainer from './PhaseContainer';
 import Toggle from './controls/Toggle';
+import SoundGeneration from './SoundGeneration';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -39,9 +40,15 @@ const Sidebar: React.FC<SidebarProps> = ({ variant }) => {
           <Toggle label="Master On/Off" value={masterOn} onChange={setMasterOn} />
         </div>
       )}
-      {containers.map((title) => (
-        <PhaseContainer key={title} title={title} />
-      ))}
+      
+      <div className="sidebar-content">
+        {containers.map((title) => {
+          if (variant === 'subtractive' && title === 'Sound Generation') {
+            return <SoundGeneration key={title} />;
+          }
+          return <PhaseContainer key={title} title={title} />;
+        })}
+      </div>
     </aside>
   );
 };

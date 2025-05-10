@@ -1,21 +1,49 @@
 /* PhaseContainer styling */
 .phase-container {
-  background-color: var(--secondary-color);
+  background: var(--content-bg-gradient);
   color: var(--text-color);
   margin: 8px 0;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: var(--border-radius);
+  border: var(--container-border);
+  box-shadow: var(--panel-shadow);
+  transition: box-shadow 0.3s ease;
+  flex-shrink: 0; /* Prevent container from shrinking when others expand */
+  max-height: fit-content; /* Allow content to determine height */
+  overflow: visible; /* Show all content */
+}
+
+.phase-container:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
 }
 
 .phase-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--secondary-gradient);
+  margin: -12px -12px 12px -12px; /* Extend to edges */
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .phase-title {
   font-size: 1.1rem;
   margin: 0;
+  position: relative;
+  padding-left: 10px;
+}
+
+.phase-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 16px;
+  background: var(--accent-color);
+  border-radius: 2px;
 }
 
 .advanced-toggle {
@@ -25,20 +53,35 @@
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.advanced-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .phase-body {
   margin-top: 10px;
+  max-height: 800px; /* Large enough to handle expanded content */
+  overflow-y: visible; /* Show all content */
 }
 
 .advanced-section {
   margin-top: 12px;
   padding: 10px;
-  background-color: var(--tertiary-color);
+  background: linear-gradient(145deg, rgba(136, 14, 79, 0.7), rgba(136, 14, 79, 0.9));
   border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--inner-shadow);
 }
 
 .placeholder {
   opacity: 0.7;
   font-style: italic;
+}
+
+.phase-container:focus-within {
+  box-shadow: 0 0 0 2px var(--secondary-color), var(--panel-shadow);
 }

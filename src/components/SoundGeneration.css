@@ -1,0 +1,293 @@
+/* Sound Generation layout */
+.sound-gen-content { /* Renamed from .sound-gen for clarity */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Overall gap between sections */
+  max-height: 100%;
+  overflow: visible; /* Allow content to expand and be scrolled by parent */
+}
+
+/* Oscillator selector buttons */
+.osc-selector {
+  display: flex;
+  justify-content: space-around; /* Evenly space OSC buttons */
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.osc-btn {
+  flex-grow: 1; /* Allow buttons to grow */
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  background: var(--secondary-gradient);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color); /* Subtle border */
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.osc-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.osc-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.osc-btn.active {
+  background: var(--primary-gradient);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Waveform selector buttons */
+.waveform-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* Gap between label and buttons */
+  margin-bottom: 8px; /* Space below waveform selector */
+  background: rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: var(--border-radius);
+  border: var(--container-border);
+  box-shadow: var(--inner-shadow);
+}
+
+.waveform-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  gap: 6px;
+}
+
+.waveform-btn {
+  flex: 1 1 auto; /* Allow buttons to grow and shrink but base on content */
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  background: var(--secondary-gradient);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.waveform-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.waveform-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.waveform-btn.active {
+  background: var(--primary-gradient);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+/* Panel for oscillator controls */
+.osc-control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Reduced gap for tighter fit of knobs */
+  width: 100%; /* Ensure panel takes full width */
+}
+
+/* Styling for the label above a group of controls like waveform buttons */
+.control-label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 2px; /* Small space below label */
+  text-align: left;
+}
+
+/* Advanced Section Toggle Button */
+.advanced-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 15px; /* Space above the toggle */
+  background: linear-gradient(145deg, rgba(0, 96, 100, 0.2), rgba(0, 96, 100, 0.4));
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  width: 100%; /* Make toggle full width */
+  font-size: 0.9rem;
+}
+
+.advanced-section-toggle:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.advanced-section-toggle:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Advanced Oscillator Settings Section */
+.advanced-osc-settings {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: rgba(0,0,0,0.1); /* Slightly different background */
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.advanced-osc-settings h4 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+/* New styles for Tuning and Level section */
+.tuning-level-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Gap between toggle button and controls */
+  border: var(--container-border);
+  border-radius: var(--border-radius);
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
+  box-shadow: var(--inner-shadow);
+}
+
+.section-toggle-btn {
+  background: var(--secondary-gradient);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between; /* Pushes arrow to the right */
+  align-items: center;
+  width: 100%;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.section-toggle-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.section-toggle-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-arrow {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-size: 0.8em; /* Smaller arrow */
+}
+
+.toggle-arrow.open {
+  transform: rotate(180deg);
+}
+
+.collapsible-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Gap between knobs in the collapsible section */
+  padding-top: 10px; /* Space above the controls when open */
+  background: rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--inner-shadow);
+}
+
+/* Advanced Oscillator Settings specific styling */
+.advanced-osc-settings {
+  padding: 12px;
+  margin-top: 15px;
+  border: 1px dashed var(--accent-color);
+  border-radius: var(--border-radius);
+  background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05));
+  box-shadow: var(--inner-shadow);
+  position: relative;
+  max-height: 600px;
+  overflow-y: visible;
+}
+
+.advanced-osc-settings::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, var(--accent-color), transparent);
+  border-radius: calc(var(--border-radius) + 2px);
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.advanced-osc-settings h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: var(--accent-color);
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.advanced-osc-settings h4::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: -6px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+}
+
+/* Style for the placeholder text in advanced settings */
+.advanced-placeholder-text {
+  font-style: italic;
+  color: var(--text-color-dimmed);
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  box-shadow: var(--inner-shadow);
+}
+
+/* Animated focus effects for components */
+.advanced-section-toggle:focus-visible,
+.section-toggle-btn:focus-visible,
+.osc-btn:focus-visible,
+.waveform-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-color), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
