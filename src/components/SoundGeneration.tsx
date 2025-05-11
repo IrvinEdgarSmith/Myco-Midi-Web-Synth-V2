@@ -90,8 +90,7 @@ const SoundGeneration: React.FC = () => {
 
   return (
     <PhaseContainer title="Sound Generation" headerControl={enableToggleControl}>
-      <div className="sound-gen-content">
-        <div className="osc-selector">
+      <div className="sound-gen-content">        <div className="osc-selector">
           {[1, 2, 3].map((n) => (
             <button
               key={n}
@@ -104,11 +103,12 @@ const SoundGeneration: React.FC = () => {
             </button>
           ))}
         </div>
+        
+        <div className="control-label waveform-title">Waveform</div>
 
         {oscEnabled && (
           <div className="osc-control-panel">
             <div className="waveform-selector">
-              <div className="control-label">Waveform</div>
               <div className="waveform-buttons">
                 {waveforms.map((wf) => (
                   <button

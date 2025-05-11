@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PhaseContainer from './PhaseContainer';
 import Knob from './controls/Knob';
 import Slider from './controls/Slider';
@@ -6,6 +6,10 @@ import Toggle from './controls/Toggle';
 import FilterResponse from './controls/FilterResponse';
 import InfoTooltip from './InfoTooltip';
 import FilterAudioPreview from './audio/FilterAudioPreview';
+import type { FilterAudioPreviewHandle } from './audio/FilterAudioPreview';
+import type { OscillatorType } from '../engine/types';
+// Define filterType literal type matching preview and response
+type FilterTypeLabel = 'LowPass' | 'HighPass' | 'BandPass' | 'Notch';
 import './TimbreShaping.css';
 
 // Utility functions for logarithmic mapping of frequency
@@ -32,6 +36,9 @@ const mapPercentToFrequency = (percent: number): number => {
   return Math.round(Math.exp(minLog + scale * percent));
 };
 
+// Array of available waveform types
+const waveformTypes: OscillatorType[] = ['sine', 'square', 'sawtooth', 'triangle'];
+
 // A simple SVG icon for the advanced toggle
 const AdvancedToggleIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,9 +46,69 @@ const AdvancedToggleIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
   </svg>
 );
 
+// WaveformIcon component to display visual representations of each waveform
+const WaveformIcon: React.FC<{ type: OscillatorType }> = ({ type }) => {
+  // Simple SVG paths representing each waveform shape
+  const paths: Record<OscillatorType, string> = {
+    sine: "M2,10 C2,8 4,6 8,10 C12,14 14,12 14,10 C14,8 12,6 8,10 C4,14 2,12 2,10",
+    square: "M2,5 L2,15 L8,15 L8,5 L14,5 L14,15",
+    sawtooth: "M2,15 L8,5 L8,15 L14,5",
+    triangle: "M2,15 L6,5 L10,15 L14,5",
+    custom: "M2,10 L4,7 L6,13 L8,7 L10,13 L12,7 L14,10" // Custom/wavetable representation
+  };
+    return (
+    <svg width="22" height="22" viewBox="0 0 16 20" className="waveform-icon">
+      <path d={paths[type]} stroke="currentColor" fill="none" strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+};
+
+// Add a simple audio checker to verify sound output
+const useAudioOutputVerifier = (isPlaying: boolean) => {
+  useEffect(() => {
+    if (isPlaying) {
+      // Create a simple verification tone that plays for just 100ms
+      // This helps confirm the audio system is actually working
+      try {
+        const verifierContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const verifierOsc = verifierContext.createOscillator();
+        const verifierGain = verifierContext.createGain();
+        
+        // Set to a high frequency that won't interfere much with main audio
+        verifierOsc.frequency.value = 5000;
+        
+        // Very quiet, just for verification
+        verifierGain.gain.value = 0.02;
+        
+        // Connect and start
+        verifierOsc.connect(verifierGain);
+        verifierGain.connect(verifierContext.destination);
+        verifierOsc.start();
+        
+        // Stop after 100ms
+        setTimeout(() => {
+          verifierOsc.stop();
+          setTimeout(() => {
+            verifierContext.close();
+          }, 100);
+        }, 100);
+        
+        console.log('Audio verification tone played');
+      } catch (e) {
+        console.error('Audio verification failed:', e);
+      }
+    }
+  }, [isPlaying]);
+};
+
 const TimbreShaping: React.FC = () => {
+  // Reference to filter audio preview component
+  const audioPreviewRef = useRef<FilterAudioPreviewHandle>(null);
+  // Reference to play button
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  
   // Filter type state
-  const [filterType, setFilterType] = useState('LowPass');
+  const [filterType, setFilterType] = useState<FilterTypeLabel>('LowPass');
 
   // Basic filter parameters
   const [cutoff, setCutoff] = useState(1000);
@@ -55,9 +122,60 @@ const TimbreShaping: React.FC = () => {
   // UI state
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
+  // Preview oscillator settings
+  const [previewWaveform, setPreviewWaveform] = useState<OscillatorType>('sawtooth');
+  const [previewFrequency, setPreviewFrequency] = useState<number>(220);
+  
+  // Verify audio output when playback starts
+  useAudioOutputVerifier(isPreviewPlaying);
   
   // Array of available filter types
-  const filterTypes = ['LowPass', 'HighPass', 'BandPass', 'Notch'];
+  const filterTypes: FilterTypeLabel[] = ['LowPass', 'HighPass', 'BandPass', 'Notch'];  // Handler to toggle playback and ensure AudioContext is resumed
+  const handlePreviewToggle = async () => {
+    console.log('TimbreShaping: handlePreviewToggle called, current isPlaying:', isPreviewPlaying);
+    
+    // Immediately try to resume AudioContext on direct user interaction
+    // This is critical for browsers that require user gesture to start audio
+    try {
+      let audioCtx = (window as any).myAudioContext;
+      if (!audioCtx) {
+        // Create a new AudioContext if one doesn't exist yet
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        (window as any).myAudioContext = audioCtx;
+        console.log('TimbreShaping: Created new AudioContext, state:', audioCtx.state);
+      }
+      
+      console.log('TimbreShaping: Direct interaction - attempting immediate resume:', audioCtx.state);
+      await audioCtx.resume();
+      console.log('TimbreShaping: After immediate resume:', audioCtx.state);
+    } catch (e) {
+      console.error('TimbreShaping: Direct resume failed:', e);
+    }
+    
+    // Toggle the playing state
+    const newPlayingState = !isPreviewPlaying;
+    
+    try {
+      // If starting playback, first ensure AudioContext is resumed
+      if (newPlayingState && audioPreviewRef.current) {
+        console.log('TimbreShaping: Attempting to resume AudioContext');
+        await audioPreviewRef.current.resumeAudioContext();
+        console.log('TimbreShaping: AudioContext resumed successfully');
+      }
+      
+      // Update the state after AudioContext is successfully resumed
+      console.log('TimbreShaping: Setting isPreviewPlaying to', newPlayingState);
+      setIsPreviewPlaying(newPlayingState);
+      
+      // Ensure the button is properly styled by forcing a focus
+      if (buttonRef.current) {
+        buttonRef.current.blur();
+        buttonRef.current.focus();
+      }
+    } catch (error) {
+      console.error('TimbreShaping: Error toggling playback:', error);
+    }
+  };
   
   // Effect for keyboard shortcuts
   useEffect(() => {
@@ -73,6 +191,9 @@ const TimbreShaping: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isPreviewPlaying]);
+  
+  // Use audio output verifier
+  useAudioOutputVerifier(isPreviewPlaying);
   
   return (
     <PhaseContainer title="Timbre Shaping">
@@ -133,19 +254,48 @@ const TimbreShaping: React.FC = () => {
               <InfoTooltip text="Controls the emphasis of frequencies around the cutoff point. Higher values create a more pronounced effect and can lead to self-oscillation." />
             </div>
           </div>
-          
-          {/* Filter Response Visualization */}
-          <div className="filter-visualization">
-            <FilterResponse 
+            {/* Filter Response Visualization */}
+          <div className="filter-visualization">            <FilterResponse 
               filterType={filterType}
               cutoff={cutoff}
               resonance={resonance}
               width={350}
               height={70}
-            />
-            <button 
+            />            {/* Preview Oscillator Controls */}
+            <div className="preview-controls">
+              <div className="control-container">                <div className="control-label waveform-heading">
+                  Waveform
+                  <InfoTooltip text="Select the oscillator waveform shape. Each shape has a different harmonic content which affects how the filter sounds." />
+                </div>
+                <div className="waveform-selector">
+                  {waveformTypes.map((type) => (
+                    <button
+                      key={type}
+                      className={`waveform-btn ${previewWaveform === type ? 'active' : ''}`}
+                      onClick={() => setPreviewWaveform(type)}
+                      aria-pressed={previewWaveform === type}
+                      title={`Select ${type} waveform`}
+                    >
+                      <WaveformIcon type={type} />
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <Slider
+                label="Frequency"
+                min={20}
+                max={2000}
+                step={1}
+                value={previewFrequency}
+                onChange={setPreviewFrequency}
+                formatValue={(val) => `${val} Hz`}
+                unit="Hz"
+              />
+            </div>            <button 
+              ref={buttonRef}
               className={`filter-preview-button ${isPreviewPlaying ? 'playing' : ''}`}
-              onClick={() => setIsPreviewPlaying(!isPreviewPlaying)}
+              onClick={handlePreviewToggle}
               aria-pressed={isPreviewPlaying}
               aria-label={`${isPreviewPlaying ? 'Stop' : 'Play'} filter audio preview`}
               title={`${isPreviewPlaying ? 'Stop' : 'Play'} filter audio preview (Press Escape to stop)`}
@@ -153,12 +303,15 @@ const TimbreShaping: React.FC = () => {
               {isPreviewPlaying ? 'Stop' : 'Hear Filter'}
             </button>
             
-            {/* Audio Preview Component */}
+            {/* Audio Preview Component with ref */}
             <FilterAudioPreview 
+              ref={audioPreviewRef}
               filterType={filterType}
               cutoff={cutoff}
               resonance={resonance}
               isPlaying={isPreviewPlaying}
+              waveform={previewWaveform}
+              frequency={previewFrequency}
             />
           </div>
         </div>
@@ -219,8 +372,7 @@ const TimbreShaping: React.FC = () => {
                 <InfoTooltip text="Adds overdrive distortion to the filter for a more aggressive sound. Higher values result in more saturation and harmonics." />
               </div>
             </div>
-          </div>
-        )}
+          </div>        )}
       </div>
     </PhaseContainer>
   );

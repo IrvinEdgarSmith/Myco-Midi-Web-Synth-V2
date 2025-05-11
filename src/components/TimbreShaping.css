@@ -223,6 +223,74 @@
   opacity: 0.05;
 }
 
+/* Waveform heading styling */
+.waveform-heading {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+/* Waveform selector styling */
+.waveform-selector {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap; /* Don't wrap to next line */
+  justify-content: space-between;
+  gap: 6px; /* Gap between buttons */
+  margin-bottom: 8px;
+}
+
+.waveform-btn {
+  flex: 1; /* Each button takes equal space */
+  padding: 12px 8px; /* Larger padding for bigger buttons */
+  font-size: 0.85rem; /* Larger font size */
+  background: var(--secondary-gradient);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0; /* Allow buttons to shrink below their content size */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis for overflow text */
+  white-space: nowrap; /* Don't wrap button text */
+  margin: 0 1px; /* Small margin for better spacing */
+  height: 60px; /* Fixed height for consistency */
+}
+
+.waveform-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.waveform-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.waveform-btn.active {
+  background: var(--primary-gradient);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.waveform-icon {
+  margin-bottom: 5px;
+  width: 22px;
+  height: 22px;
+}
+
 /* Filter preview button */
 .filter-preview-button {
   position: absolute;
@@ -253,9 +321,23 @@
 }
 
 .filter-preview-button.playing {
-  background: var(--primary-gradient);
+  background: linear-gradient(145deg, rgba(174, 234, 0, 0.8), rgba(174, 234, 0, 0.5));
   border-color: var(--accent-color);
+  color: black;
   box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(174, 234, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(174, 234, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(174, 234, 0, 0);
+  }
 }
 
 /* Placeholder styling */
@@ -263,4 +345,21 @@
   font-style: italic;
   color: var(--text-color-dimmed);
   text-align: center;
+}
+
+/* Responsive waveform buttons for small screens */
+@media (max-width: 500px) {
+  .waveform-selector {
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+  
+  .waveform-btn {
+    padding: 10px 5px; /* Slightly larger touch target on small screens */
+    min-width: calc(50% - 3px); /* Ensure two buttons per row with gap considered */
+    height: 50px; /* Slightly smaller height on mobile */
+  }
+  
+  .waveform-icon {
+    margin-bottom: 3px; /* Less spacing for smaller screens */
+  }
 }
