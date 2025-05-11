@@ -48,14 +48,10 @@
 }
 
 /* Waveform selector buttons */
-.waveform-title {
-  margin: 8px 0 6px 0; /* Add margin above and below the title */
-  font-weight: 500;
-}
-
 .waveform-selector {
   display: flex;
   flex-direction: column;
+  gap: 6px; /* Gap between label and buttons */
   margin-bottom: 8px; /* Space below waveform selector */
   background: rgba(0, 0, 0, 0.1);
   padding: 10px;

@@ -24,11 +24,8 @@
   
   /* Active states */
   --active-glow: 0 0 10px rgba(174, 234, 0, 0.4);
-  
-  /* Font family */
-  --font-primary: 'Outfit', system-ui, sans-serif;
-  
-  font-family: var(--font-primary);
+
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -56,18 +53,12 @@ body {
   padding: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: var(--font-primary);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-primary);
-  line-height: 1.2;
-  font-weight: 600;
+  font-family: sans-serif;
 }
 
 h1 {
   font-size: 3.2em;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 button {
@@ -108,26 +99,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-/* Enhanced Typography */
-.control-label, 
-.key-tracking-label, 
-.filter-selector,
-.waveform-heading {
-  font-family: var(--font-primary);
-  letter-spacing: 0.01em;
-}
-
-.waveform-btn,
-.filter-type-btn {
-  font-weight: 500;
-  letter-spacing: 0.01em;
-}
-
-/* Improve number readouts */
-.slider-value,
-.knob-value {
-  font-variant-numeric: tabular-nums;
-  font-weight: 500;
 }
