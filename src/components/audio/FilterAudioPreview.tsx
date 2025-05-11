@@ -1,7 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 
+// Define the allowed filter type labels and a mapping to Web Audio filter types
+type FilterTypeLabel = 'LowPass' | 'HighPass' | 'BandPass' | 'Notch';
+const FILTER_TYPE_MAP: Record<FilterTypeLabel, BiquadFilterType> = {
+  LowPass: 'lowpass',
+  HighPass: 'highpass',
+  BandPass: 'bandpass',
+  Notch: 'notch'
+};
+
 interface FilterAudioPreviewProps {
-  filterType: string;
+  filterType: FilterTypeLabel;
   cutoff: number;
   resonance: number;
   isPlaying: boolean;
@@ -50,11 +59,6 @@ const FilterAudioPreview: React.FC<FilterAudioPreviewProps> = ({
       oscillator.type = 'sawtooth'; // Rich harmonic content to hear filter effect
       oscillator.frequency.value = 220; // A3
       
-      // Set filter properties based on props
-      filter.type = filterType.toLowerCase() as BiquadFilterType;
-      filter.frequency.value = cutoff;
-      filter.Q.value = resonance * 20; // Scale resonance
-      
       // Set gain to avoid clipping
       gain.gain.value = 0.2;
       
@@ -79,7 +83,7 @@ const FilterAudioPreview: React.FC<FilterAudioPreviewProps> = ({
         gain.disconnect();
       };
     }
-  }, [isPlaying, filterType]);
+  }, [isPlaying]);
   
   // Update filter parameters when they change
   useEffect(() => {
@@ -90,16 +94,8 @@ const FilterAudioPreview: React.FC<FilterAudioPreviewProps> = ({
     filter.frequency.value = cutoff;
     filter.Q.value = resonance * 20; // Scale resonance
     
-    // Map filter type
-    const filterTypeMap: { [key: string]: BiquadFilterType } = {
-      'LowPass': 'lowpass',
-      'HighPass': 'highpass',
-      'BandPass': 'bandpass',
-      'Notch': 'notch'
-    };
-    
     // Set the filter type
-    filter.type = filterTypeMap[filterType] || 'lowpass';
+    filter.type = FILTER_TYPE_MAP[filterType] || 'lowpass';
   }, [cutoff, resonance, filterType]);
   
   // No actual UI is rendered
