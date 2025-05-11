@@ -47,7 +47,8 @@ const TimbreShaping: React.FC = () => {
     buttonRef, 
     togglePlayback: handlePreviewToggle 
   } = useFilterPreview();
-    // Verify audio output when playback starts
+  
+  // Verify audio output when playback starts
   useAudioVerifier(isPreviewPlaying);
   
   // Enable keyboard escape to stop audio
@@ -66,6 +67,7 @@ const TimbreShaping: React.FC = () => {
     const freq = mapPercentToFrequency(percent);
     return freq < 1000 ? freq.toFixed(0) : (freq / 1000).toFixed(1) + "k";
   };
+
   return (
     <PhaseContainer title="Timbre Shaping">
       <div className="timbre-shaping-content">
@@ -115,16 +117,6 @@ const TimbreShaping: React.FC = () => {
             onFrequencyChange={setPreviewFrequency}
             waveformTypes={WAVEFORM_TYPES}
           />
-            {/* Audio Preview Component - No visible UI */}
-          <FilterAudioPreview
-            ref={audioPreviewRef as any}
-            filterType={filterType}
-            cutoff={cutoff}
-            resonance={resonance}
-            isPlaying={isPreviewPlaying}
-            waveform={previewWaveform}
-            frequency={previewFrequency}
-          />
         </div>
         
         {/* Advanced Section Toggle Button */}
@@ -148,6 +140,21 @@ const TimbreShaping: React.FC = () => {
             onKeyTrackingChange={setKeyTracking}
             onDriveChange={setDrive}
           />
+        )}
+        
+        {/* Audio Preview Component - Hidden in the DOM */}
+        {isPreviewPlaying && (
+          <div style={{ display: 'none' }}>
+            <FilterAudioPreview
+              ref={audioPreviewRef}
+              filterType={filterType}
+              cutoff={cutoff}
+              resonance={resonance}
+              isPlaying={isPreviewPlaying}
+              waveform={previewWaveform}
+              frequency={previewFrequency}
+            />
+          </div>
         )}
       </div>
     </PhaseContainer>

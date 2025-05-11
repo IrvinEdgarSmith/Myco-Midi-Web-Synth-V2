@@ -185,19 +185,35 @@
 /* Compact layout for filter controls and visualization */
 .filter-main-controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Default: stack vertically */
   gap: 8px;
   width: 100%;
 }
 
+.filter-visualization-wrapper { /* This class styles the right column containing the graph, waveform selector, etc. */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between graph, waveform selector etc. */
+  width: 100%; /* Takes full width when stacked in the default column layout of parent */
+}
+
 @media (min-width: 480px) {
   .filter-main-controls {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row; /* Switch to side-by-side for wider screens */
+    align-items: flex-start; /* Align children to the top */
+    gap: 16px; /* Wider gap for side-by-side layout */
   }
 
   .basic-filter-controls {
-    margin-bottom: 0;
+    flex: 0 0 180px; /* Basic controls take a fixed width. Adjust 180px as needed. */
+    /* width: 100%; is fine here as it refers to the 180px flex basis */
+    margin-bottom: 0; /* Remove bottom margin when side-by-side */
+  }
+
+  .filter-visualization-wrapper {
+    flex: 1; /* Allow this wrapper to grow and take the remaining horizontal space */
+    width: auto; /* Override the default width: 100% to allow flex sizing */
+    /* display: flex; and flex-direction: column; are already correctly defined above */
   }
 }
 

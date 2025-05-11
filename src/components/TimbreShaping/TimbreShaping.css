@@ -3,22 +3,31 @@
   width: 100%;
   padding: 5px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Layout for filter main controls */
-.filter-main-controls {
+/* Layout for filter controls and visualization in a row */
+.filter-controls-visualization-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
   margin-top: 5px;
 }
 
-/* Wrapper for filter visualization and related components */
-.filter-visualization-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+/* Filter controls column */
+.filter-controls-column {
+  flex: 0 0 auto;
+  width: 180px;
+}
+
+/* Filter visualization column */
+.filter-visualization-column {
+  flex: 1;
+  min-width: 0; /* Prevent flex items from overflowing */
 }
 
 /* Filter visualization component */
@@ -28,6 +37,12 @@
   padding: 4px;
   border-radius: var(--border-radius);
   background: rgba(0, 0, 0, 0.1);
+}
+
+/* Waveform controls section */
+.waveform-controls-section {
+  width: 100%;
+  margin-top: 5px;
 }
 
 /* Preview controls - to ensure proper layout of waveform buttons */

@@ -14,13 +14,15 @@ const FilterVisualization: React.FC<FilterVisualizationProps> = ({
   height = 70
 }) => {
   return (
-    <FilterResponse 
-      filterType={filterType}
-      cutoff={cutoff}
-      resonance={resonance}
-      width={width}
-      height={height}
-    />
+    <div className="filter-response-container">
+      <FilterResponse 
+        filterType={filterType}
+        cutoff={cutoff}
+        resonance={resonance}
+        width={width}
+        height={height}
+      />
+    </div>
   );
 };
 
