@@ -10,8 +10,8 @@ const FilterVisualization: React.FC<FilterVisualizationProps> = ({
   filterType,
   cutoff,
   resonance,
-  width = 350,
-  height = 70
+  width = 500, // Increased from 350
+  height = 150 // Increased from 70
 }) => {
   return (
     <div className="filter-response-container">

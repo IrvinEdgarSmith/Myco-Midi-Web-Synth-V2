@@ -11,8 +11,8 @@
 /* Layout for filter controls and visualization in a row */
 .filter-controls-visualization-row {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column; /* Default to column layout on mobile */
+  align-items: stretch;
   gap: 15px;
   width: 100%;
   margin-top: 5px;
@@ -20,23 +20,22 @@
 
 /* Filter controls column */
 .filter-controls-column {
-  flex: 0 0 auto;
-  width: 180px;
+  width: 100%;
 }
 
 /* Filter visualization column */
 .filter-visualization-column {
-  flex: 1;
-  min-width: 0; /* Prevent flex items from overflowing */
+  width: 100%;
 }
 
 /* Filter visualization component */
 .filter-visualization {
   position: relative;
   margin: 5px 0 8px 0;
-  padding: 4px;
+  padding: 10px; /* Increased padding */
   border-radius: var(--border-radius);
   background: rgba(0, 0, 0, 0.1);
+  min-height: 170px; /* Accommodate larger graph */
 }
 
 /* Waveform controls section */
@@ -45,17 +44,40 @@
   margin-top: 5px;
 }
 
+/* Media query for wider screens - switch to row layout */
+@media (min-width: 768px) {
+  .filter-controls-visualization-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .filter-controls-column {
+    flex: 0 0 auto;
+    width: 280px; /* Increased to accommodate horizontal sliders */
+    padding-right: 15px;
+  }
+  
+  .filter-visualization-column {
+    flex: 1;
+    min-width: 0; /* Prevent flex items from overflowing */
+  }
+}
+
 /* Preview controls - to ensure proper layout of waveform buttons */
 .preview-controls {
   margin-top: 8px;
 }
-
-/* Advanced section toggle styling is now in AdvancedFilterSettings.css */
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .filter-main-controls {
     flex-direction: column;
     align-items: center;
+  }
+  
+  /* When on mobile, even the basic filter controls should be stacked */
+  .basic-filter-controls {
+    flex-direction: column;
+    gap: 10px;
   }
 }

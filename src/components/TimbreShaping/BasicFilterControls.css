@@ -1,15 +1,15 @@
 /* Basic Filter Controls Styles */
 .basic-filter-controls {
   display: flex;
-  flex-direction: column;
-  gap: 6px; /* Even smaller gap for vertical stacked sliders */
-  justify-content: space-around;
+  flex-direction: row; /* Change to horizontal layout */
+  gap: 12px; /* Add gap between controls */
+  justify-content: space-between;
   margin-bottom: 6px; /* Reduced margin */
   width: 100%;
 }
 
 .control-container {
-  flex: 1 1 100%;
-  min-width: 80px;
+  flex: 1 1 50%;
+  min-width: 120px;
   width: 100%;
 }
