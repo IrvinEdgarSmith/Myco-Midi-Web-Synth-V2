@@ -1,0 +1,27 @@
+import React from 'react';
+import FilterResponse from '../controls/FilterResponse';
+import type { FilterVisualizationProps } from './types';
+import './FilterVisualization.css';
+
+/**
+ * Component that displays the filter response visualization
+ */
+const FilterVisualization: React.FC<FilterVisualizationProps> = ({
+  filterType,
+  cutoff,
+  resonance,
+  width = 350,
+  height = 70
+}) => {
+  return (
+    <FilterResponse 
+      filterType={filterType}
+      cutoff={cutoff}
+      resonance={resonance}
+      width={width}
+      height={height}
+    />
+  );
+};
+
+export default FilterVisualization;

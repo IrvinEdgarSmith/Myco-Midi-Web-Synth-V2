@@ -1,0 +1,43 @@
+/* Filter Type Selector Styles */
+.filter-selector {
+  margin-bottom: 8px;
+}
+
+.filter-type-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four equal columns for the buttons */
+  gap: 4px; /* Reduced gap */
+  margin-bottom: 8px; /* Reduced margin */
+}
+
+.filter-type-btn {
+  padding: 5px 2px; /* Adjusted padding for even sizing */
+  font-size: 0.8rem; /* Slightly smaller font */
+  background: var(--secondary-gradient);
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.filter-type-btn:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.filter-type-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.filter-type-btn.active {
+  background: var(--primary-gradient);
+  border-color: var(--accent-color);
+  color: var(--text-color);
+  box-shadow: var(--active-glow), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}

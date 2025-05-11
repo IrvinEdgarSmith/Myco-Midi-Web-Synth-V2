@@ -1,0 +1,70 @@
+/* Advanced Filter Settings Styles */
+.advanced-filter-settings {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.advanced-filter-settings h4 {
+  font-size: 0.9rem;
+  margin: 0 0 10px 0;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.advanced-controls-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.key-tracking-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.key-tracking-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+/* Advanced section toggle button styling */
+.advanced-section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px auto 0;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--dimmed-cyan-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 140px;
+}
+
+.advanced-section-toggle:hover {
+  border-color: var(--accent-color);
+}
+
+.advanced-section-toggle:active {
+  transform: translateY(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .advanced-controls-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}

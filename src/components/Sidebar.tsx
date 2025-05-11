@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PhaseContainer from './PhaseContainer';
 import Toggle from './controls/Toggle';
 import SoundGeneration from './SoundGeneration';
-import TimbreShaping from './TimbreShaping';
+import TimbreShaping from './TimbreShaping/TimbreShaping';
 import './Sidebar.css';
 
 interface SidebarProps {
