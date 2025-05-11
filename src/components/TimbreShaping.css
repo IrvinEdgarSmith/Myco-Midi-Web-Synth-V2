@@ -2,21 +2,20 @@
 .timbre-shaping-content {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Overall gap between sections */
+  gap: 8px; /* Reduced overall gap between sections */
 }
 
 /* Filter type selector styling */
 .filter-type-selector {
-  display: flex;
-  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-  gap: 6px;
-  margin-bottom: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four equal columns for the buttons */
+  gap: 4px; /* Reduced gap */
+  margin-bottom: 8px; /* Reduced margin */
 }
 
 .filter-type-btn {
-  flex: 1 1 auto; /* Allow buttons to grow and shrink but base on content */
-  padding: 6px 10px;
-  font-size: 0.85rem;
+  padding: 5px 2px; /* Adjusted padding for even sizing */
+  font-size: 0.8rem; /* Slightly smaller font */
   background: var(--secondary-gradient);
   color: var(--text-color);
   border: 1px solid var(--dimmed-cyan-color);
@@ -24,6 +23,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 .filter-type-btn:hover {
@@ -48,17 +48,17 @@
 /* Basic filter controls */
 .basic-filter-controls {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  gap: 6px; /* Even smaller gap for vertical stacked sliders */
   justify-content: space-around;
-  margin-bottom: 15px;
+  margin-bottom: 6px; /* Reduced margin */
+  width: 100%;
 }
 
 .control-container {
-  flex: 1 1 120px;
-  min-width: 90px;
-  max-width: 150px;
+  flex: 1 1 100%;
+  min-width: 80px;
+  width: 100%;
 }
 
 /* Advanced Section Toggle Button */
@@ -66,9 +66,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 12px;
-  margin-top: 15px; /* Space above the toggle */
+  gap: 6px;
+  padding: 4px 8px;
+  margin-top: 6px; /* Reduced space above the toggle */
   background: linear-gradient(145deg, rgba(0, 96, 100, 0.2), rgba(0, 96, 100, 0.4));
   color: var(--text-color);
   border: 1px solid var(--dimmed-cyan-color);
@@ -78,6 +78,7 @@
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  font-size: 0.8rem; /* Smaller font size */
 }
 
 .advanced-section-toggle:hover {
@@ -93,8 +94,8 @@
 
 /* Advanced filter settings specific styling */
 .advanced-filter-settings {
-  padding: 12px;
-  margin-top: 15px;
+  padding: 8px;
+  margin-top: 8px;
   border: 1px dashed var(--accent-color);
   border-radius: var(--border-radius);
   background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05));
@@ -119,8 +120,8 @@
 
 .advanced-filter-settings h4 {
   margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 1rem;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
   color: var(--accent-color);
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -130,18 +131,18 @@
 .advanced-filter-settings h4::after {
   content: "";
   position: absolute;
-  left: 25%;
-  right: 25%;
-  bottom: -6px;
+  left: 30%;
+  right: 30%;
+  bottom: -4px;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--accent-color), transparent);
 }
 
 .advanced-controls-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
 }
 
 /* Key tracking switch styling */
@@ -167,8 +168,8 @@
 
 /* Control label styling */
 .control-label {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
   color: var(--text-color);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   font-weight: 500;
@@ -178,13 +179,32 @@
 
 /* Filter selector section */
 .filter-selector {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
+}
+
+/* Compact layout for filter controls and visualization */
+.filter-main-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .filter-main-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .basic-filter-controls {
+    margin-bottom: 0;
+  }
 }
 
 /* Filter response visualization styling */
 .filter-visualization {
-  margin: 10px 0 15px 0;
-  padding: 5px;
+  margin: 5px 0 8px 0;
+  padding: 4px;
   border-radius: var(--border-radius);
   background: rgba(0, 0, 0, 0.1);
   position: relative;
@@ -206,14 +226,14 @@
 /* Filter preview button */
 .filter-preview-button {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 5px;
+  right: 5px;
   background: rgba(0, 0, 0, 0.5);
   color: var(--text-color);
   border: 1px solid var(--dimmed-cyan-color);
   border-radius: var(--border-radius);
-  padding: 4px 8px;
-  font-size: 0.75rem;
+  padding: 3px 6px;
+  font-size: 0.7rem;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

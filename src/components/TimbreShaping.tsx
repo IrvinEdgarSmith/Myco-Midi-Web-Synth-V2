@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PhaseContainer from './PhaseContainer';
 import Knob from './controls/Knob';
+import Slider from './controls/Slider';
 import Toggle from './controls/Toggle';
 import FilterResponse from './controls/FilterResponse';
 import InfoTooltip from './InfoTooltip';
@@ -33,7 +34,7 @@ const mapPercentToFrequency = (percent: number): number => {
 
 // A simple SVG icon for the advanced toggle
 const AdvancedToggleIcon: React.FC<{ isOpen: boolean }> = ({ isOpen }) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d={isOpen ? "M18 12H6" : "M12 6V18M6 12H18"} stroke="var(--text-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
@@ -54,6 +55,7 @@ const TimbreShaping: React.FC = () => {
   // UI state
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
+  
   // Array of available filter types
   const filterTypes = ['LowPass', 'HighPass', 'BandPass', 'Notch'];
   
@@ -71,9 +73,11 @@ const TimbreShaping: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isPreviewPlaying]);
+  
   return (
     <PhaseContainer title="Timbre Shaping">
-      <div className="timbre-shaping-content">        {/* Filter Type Selector */}
+      <div className="timbre-shaping-content">
+        {/* Filter Type Selector - More compact */}
         <div className="filter-selector">
           <div className="control-label">
             Filter Type
@@ -93,62 +97,70 @@ const TimbreShaping: React.FC = () => {
             ))}
           </div>
         </div>
-          {/* Basic filter controls */}        <div className="basic-filter-controls">
-          <div className="control-container">            
-            <Knob
-              label="Cutoff"
-              min={0}
-              max={100}
-              step={1}
-              value={mapFrequencyToPercent(cutoff)}
-              onChange={(val) => setCutoff(mapPercentToFrequency(val))}
-              formatValue={(val) => {
-                const freq = mapPercentToFrequency(val);
-                return freq < 1000 ? freq.toFixed(0) : (freq / 1000).toFixed(1) + "k"
-              }}
-              unit="Hz"
-            />
-            <InfoTooltip text="Sets the cutoff frequency for the filter (20Hz-20kHz). The effect depends on the selected filter type." />
+        
+        {/* New layout combining controls and visualization side by side on desktop */}
+        <div className="filter-main-controls">
+          {/* Basic filter controls - using sliders instead of knobs */}
+          <div className="basic-filter-controls">
+            <div className="control-container">              <Slider
+                label="Cutoff"
+                min={0}
+                max={100}
+                step={1}
+                value={mapFrequencyToPercent(cutoff)}
+                onChange={(val) => setCutoff(mapPercentToFrequency(val))}
+                formatValue={(val) => {
+                  const freq = mapPercentToFrequency(val);
+                  return freq < 1000 ? freq.toFixed(0) : (freq / 1000).toFixed(1) + "k"
+                }}
+                unit="Hz"
+                fillColor="#AEEA00"
+              />
+              <InfoTooltip text="Sets the cutoff frequency for the filter (20Hz-20kHz). The effect depends on the selected filter type." />
+            </div>
+            <div className="control-container">
+              <Slider
+                label="Resonance"
+                min={0}
+                max={1}
+                step={0.01}
+                value={resonance}
+                onChange={setResonance}
+                formatValue={(val) => (val * 100).toFixed(0)}
+                unit="%"
+                fillColor="#AEEA00"
+              />
+              <InfoTooltip text="Controls the emphasis of frequencies around the cutoff point. Higher values create a more pronounced effect and can lead to self-oscillation." />
+            </div>
           </div>
-          <div className="control-container">
-            <Knob
-              label="Resonance"
-              min={0}
-              max={1}
-              step={0.01}
-              value={resonance}
-              onChange={setResonance}
-              formatValue={(val) => (val * 100).toFixed(0)}
-              unit="%"
-            />
-            <InfoTooltip text="Controls the emphasis of frequencies around the cutoff point. Higher values create a more pronounced effect and can lead to self-oscillation." />
-          </div>
-        </div>
-          {/* Filter Response Visualization */}
-        <div className="filter-visualization">
-          <FilterResponse 
-            filterType={filterType}
-            cutoff={cutoff}
-            resonance={resonance}
-            width={350}
-            height={80}
-          />          <button 
-            className={`filter-preview-button ${isPreviewPlaying ? 'playing' : ''}`}
-            onClick={() => setIsPreviewPlaying(!isPreviewPlaying)}
-            aria-pressed={isPreviewPlaying}
-            aria-label={`${isPreviewPlaying ? 'Stop' : 'Play'} filter audio preview`}
-            title={`${isPreviewPlaying ? 'Stop' : 'Play'} filter audio preview (Press Escape to stop)`}
-          >
-            {isPreviewPlaying ? 'Stop Preview' : 'Hear Filter'}
-          </button>
           
-          {/* Audio Preview Component */}
-          <FilterAudioPreview 
-            filterType={filterType}
-            cutoff={cutoff}
-            resonance={resonance}
-            isPlaying={isPreviewPlaying}
-          />
+          {/* Filter Response Visualization */}
+          <div className="filter-visualization">
+            <FilterResponse 
+              filterType={filterType}
+              cutoff={cutoff}
+              resonance={resonance}
+              width={350}
+              height={70}
+            />
+            <button 
+              className={`filter-preview-button ${isPreviewPlaying ? 'playing' : ''}`}
+              onClick={() => setIsPreviewPlaying(!isPreviewPlaying)}
+              aria-pressed={isPreviewPlaying}
+              aria-label={`${isPreviewPlaying ? 'Stop' : 'Play'} filter audio preview`}
+              title={`${isPreviewPlaying ? 'Stop' : 'Play'} filter audio preview (Press Escape to stop)`}
+            >
+              {isPreviewPlaying ? 'Stop' : 'Hear Filter'}
+            </button>
+            
+            {/* Audio Preview Component */}
+            <FilterAudioPreview 
+              filterType={filterType}
+              cutoff={cutoff}
+              resonance={resonance}
+              isPlaying={isPreviewPlaying}
+            />
+          </div>
         </div>
         
         {/* Advanced Section Toggle Button */}
@@ -164,7 +176,9 @@ const TimbreShaping: React.FC = () => {
         
         {/* Advanced filter controls */}
         {showAdvanced && (
-          <div id="advanced-filter-controls" className="advanced-filter-settings">            <h4>Advanced Filter Settings</h4>            <div className="advanced-controls-grid">
+          <div id="advanced-filter-controls" className="advanced-filter-settings">
+            <h4>Advanced Filter Settings</h4>
+            <div className="advanced-controls-grid">
               <div className="control-container">
                 <Knob
                   label="Env Amount"
